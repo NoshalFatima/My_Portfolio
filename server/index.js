@@ -45,21 +45,28 @@ app.post("/api/contact", async (req, res) => {
       }
     });
 
-    await transporter.sendMail({
-      from: `"Noshal Portfolio" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO,
-      replyTo: email,
-      subject: `Portfolio Message: ${subject}`,
-      html: `
-        <h2>New Portfolio Message</h2>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Phone:</b> ${phone || "Not provided"}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Subject:</b> ${subject}</p>
-        <p><b>Message:</b></p>
-        <p>${message}</p>
-      `
-    });
+   
+try {
+  await transporter.sendMail({
+    from: `"Noshal Portfolio" <${process.env.EMAIL_USER}>`,
+    to: process.env.EMAIL_TO,
+    replyTo: email,
+    subject: `Portfolio Message: ${subject}`,
+    html: `
+      <h2>New Portfolio Message</h2>
+      <p><b>Name:</b> ${name}</p>
+      <p><b>Phone:</b> ${phone || "Not provided"}</p>
+      <p><b>Email:</b> ${email}</p>
+      <p><b>Subject:</b> ${subject}</p>
+      <p><b>Message:</b></p>
+      <p>${message}</p>
+    `
+  });
+  console.log("Email sent successfully!");
+} catch (emailError) {
+
+  console.log("Nodemailer failed but database is safe:", emailError.message);
+}
 
     res.json({ message: "Message sent successfully." });
   } catch (error) {
