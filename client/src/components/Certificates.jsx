@@ -4,7 +4,7 @@ export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/certificates")
+    fetch("https://myportfolio-b54v.onrender.com/api/certificates")
       .then((res) => res.json())
       .then((data) => setCertificates(data))
       .catch(() => setCertificates([]));
