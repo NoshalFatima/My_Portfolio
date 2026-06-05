@@ -20,8 +20,8 @@ export default function Contact() {
     setStatus("Sending message...");
 
     try {
-  // localhost:5000 hata diya, ab yeh relative path ban gaya hai
-  const response = await fetch("/api/contact", {
+  // Poora Render ka URL laga dein taake request seedha backend par jaye
+  const response = await fetch("https://myportfolio-b54v.onrender.com/api/contact", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
