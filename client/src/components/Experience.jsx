@@ -4,7 +4,7 @@ export default function Experience() {
   const [experience, setExperience] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/experience")
+    fetch("https://myportfolio-b54v.onrender.com/api/experience")
       .then((res) => res.json())
       .then((data) => setExperience(data))
       .catch(() => setExperience([]));
