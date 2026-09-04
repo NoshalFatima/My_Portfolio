@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Reveal from "./Reveal";
+import useTilt from "../hooks/useTilt";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -10,6 +12,7 @@ export default function Contact() {
   });
 
   const [status, setStatus] = useState("");
+  const { ref: formRef, onMouseMove, onMouseLeave } = useTilt({ maxTilt: 3, scale: 1.005 });
 
   function updateForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,14 +23,13 @@ export default function Contact() {
     setStatus("Sending message...");
 
     try {
-  // Poora Render ka URL laga dein taake request seedha backend par jaye
-  const response = await fetch("https://myportfolio-b54v.onrender.com/api/contact", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(form)
-  });
+      const response = await fetch("https://myportfolio-b54v.onrender.com/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+      });
 
       const data = await response.json();
       setStatus(data.message);
@@ -47,7 +49,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact">
+    <Reveal as="section" id="contact">
       <p className="section-label">Contact</p>
       <h2>Let’s Work Together</h2>
 
@@ -59,11 +61,16 @@ export default function Contact() {
           </p>
           <a href="mailto:noshalfatima28@gmail.com">noshalfatima28@gmail.com</a>
           <a href="tel:03404005981">03404005981</a>
-          <a href="https://github.com/NoshalFatima" target="_blank">GitHub</a>
-          <a href="https://linkedin.com/in/noshal-fatima" target="_blank">LinkedIn</a>
+          <a href="https://github.com/NoshalFatima" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/noshal-fatima" target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
 
-        <form onSubmit={sendMessage}>
+        <form
+          onSubmit={sendMessage}
+          ref={formRef}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+        >
           <input name="name" placeholder="Your name" value={form.name} onChange={updateForm} required />
           <input name="phone" placeholder="Phone number" value={form.phone} onChange={updateForm} />
           <input name="email" type="email" placeholder="Email address" value={form.email} onChange={updateForm} required />
@@ -73,6 +80,6 @@ export default function Contact() {
           {status && <p className="form-status">{status}</p>}
         </form>
       </div>
-    </section>
+    </Reveal>
   );
 }

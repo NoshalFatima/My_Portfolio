@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import CertificateCard from "./CertificateCard";
+import Reveal from "./Reveal";
 
 export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
@@ -16,16 +18,14 @@ export default function Certificates() {
       <h2>Certifications & Achievements</h2>
 
       <div className="grid">
-        {certificates.map((cert) => (
-          <article className="card cert-card" key={cert._id}>
-            <img className="cert-img" src={cert.imageUrl} alt={`${cert.name} certificate`} />
-            <h3>{cert.name}</h3>
-            <p>{cert.issuer}</p>
-            <p className="muted">{cert.date}</p>
-            <a className="project-link" href={cert.certificateUrl} target="_blank">
-              View Certificate
-            </a>
-          </article>
+        {certificates.map((cert, i) => (
+          <Reveal
+            as="div"
+            key={cert._id}
+            style={{ transitionDelay: `${Math.min(i * 60, 300)}ms` }}
+          >
+            <CertificateCard cert={cert} />
+          </Reveal>
         ))}
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import TiltCard from "./TiltCard";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -17,7 +18,7 @@ export default function Projects() {
 
       <div className="grid">
         {projects.map((project) => (
-          <article className="card project-card" key={project._id}>
+          <TiltCard as="article" className="card project-card" key={project._id}>
             <p className="muted">{project.type}</p>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
@@ -28,10 +29,10 @@ export default function Projects() {
               ))}
             </div>
 
-            <a className="project-link" href={project.link} target="_blank">
+            <a className="project-link" href={project.link} target="_blank" rel="noreferrer">
               View Project
             </a>
-          </article>
+          </TiltCard>
         ))}
       </div>
     </section>
