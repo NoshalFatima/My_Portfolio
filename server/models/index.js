@@ -4,7 +4,18 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
 import portfolioRoutes from "./routes/portfolioRoutes.js";
+app.get("/api/fix-order", async (req, res) => {
+  try {
+    await Project.updateMany({ order: { $exists: false } }, { $set: { order: 0 } });
+    await Experience.updateMany({ order: { $exists: false } }, { $set: { order: 0 } });
+    await Certificate.updateMany({ order: { $exists: false } }, { $set: { order: 0 } });
+    await Skill.updateMany({ order: { $exists: false } }, { $set: { order: 0 } });
 
+    res.send("All database documents updated with default order!");
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 dotenv.config();
 
 const app = express();

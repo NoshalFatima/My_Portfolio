@@ -7,7 +7,8 @@ const projectSchema = new mongoose.Schema(
     description: { type: String, required: true },
     stack: [{ type: String }],
     link: { type: String },
-    featured: { type: Boolean, default: false }
+    featured: { type: Boolean, default: false },
+    order: { type: Number, default: 0 } // Projects ko sequence/num ke hisaab se sort karne ke liye
   },
   { timestamps: true }
 );
