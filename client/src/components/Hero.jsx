@@ -30,9 +30,11 @@ function AnimatedLetters({ text, startDelay = 0 }) {
 
 export default function Hero() {
   const sceneRef = useRef(null);
+  const videoRef = useRef(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [muted, setMuted] = useState(true);
 
-  // Moves the background grid / orbs opposite the cursor for a subtle parallax feel.
+  // Moves the background grid opposite the cursor for a subtle parallax feel.
   const onSceneMouseMove = useCallback((e) => {
     const el = sceneRef.current;
     if (!el) return;
@@ -50,6 +52,19 @@ export default function Hero() {
     el.style.setProperty("--py", 0);
   }, []);
 
+  // Browsers only allow audio playback after a real user gesture (tap/click) —
+  // this button IS that gesture, so unmuting here works reliably on mobile too.
+  function toggleSound() {
+    const video = videoRef.current;
+    if (!video) return;
+    const next = !muted;
+    video.muted = next;
+    if (!next) {
+      video.play().catch(() => {});
+    }
+    setMuted(next);
+  }
+
   return (
     <main
       id="home"
@@ -59,6 +74,7 @@ export default function Hero() {
       onMouseLeave={onSceneMouseLeave}
     >
       <video
+        ref={videoRef}
         className={`hero-bg-video ${videoReady ? "is-ready" : ""}`}
         src={heroVideo}
         autoPlay
@@ -70,12 +86,21 @@ export default function Hero() {
       <div className="hero-video-overlay" aria-hidden="true" />
       <div className="hero-grid" aria-hidden="true" />
 
+      <button
+        type="button"
+        className="sound-toggle"
+        onClick={toggleSound}
+        aria-label={muted ? "Turn sound on" : "Turn sound off"}
+      >
+        {muted ? "🔇 Sound Off" : "🔊 Sound On"}
+      </button>
+
       <div className="hero-layout hero-layout-single">
         <div className="hero-content">
           <p className="eyebrow">Open to junior developer roles</p>
 
           <h1><AnimatedLetters text="Noshal Fatima" /></h1>
-          <h2>Flutter Developer, AI Engineer &amp; Junior Full-Stack Developer</h2>
+          <h2>Flutter Developer, <br /> AI Engineer &amp; Junior <br /> Full-Stack Developer</h2>
 
           <p>
             I build mobile apps, AI tools, and full-stack web products using Flutter,
