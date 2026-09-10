@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 export default function CertificateCard({ cert }) {
@@ -23,7 +22,7 @@ export default function CertificateCard({ cert }) {
       }}
     >
       <div className={`cert-flip-inner ${flipped ? "is-flipped" : ""}`}>
-        <div className="cert-face cert-face-front">
+        <div className="cert-face cert-face-front glow-border">
           <img className="cert-img" src={cert.imageUrl} alt={`${cert.name} certificate`} />
           <h3>{cert.name}</h3>
           <p className="muted">{cert.issuer}</p>

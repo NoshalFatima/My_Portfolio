@@ -6,7 +6,8 @@ const certificateSchema = new mongoose.Schema(
     issuer: { type: String, required: true },
     date: { type: String, required: true },
     imageUrl: { type: String, required: true },
-    certificateUrl: { type: String, required: true }
+    certificateUrl: { type: String, required: true },
+    order: { type: Number, default: 0 }
   },
   { timestamps: true }
 );

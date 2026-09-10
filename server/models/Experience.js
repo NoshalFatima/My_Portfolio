@@ -6,7 +6,8 @@ const experienceSchema = new mongoose.Schema(
     organization: { type: String, required: true },
     period: { type: String, required: true },
     type: { type: String, default: "Experience" },
-    points: [{ type: String }]
+    points: [{ type: String }],
+    order: { type: Number, default: 0 }
   },
   { timestamps: true }
 );
