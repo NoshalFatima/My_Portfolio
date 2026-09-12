@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import TiltCard from "./TiltCard";
+import ProjectCard from "./projectcard";
+import Reveal from "./Reveal";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -7,7 +8,16 @@ export default function Projects() {
   useEffect(() => {
     fetch("https://myportfolio-b54v.onrender.com/api/projects")
       .then((res) => res.json())
-      .then((data) => setProjects(data))
+      .then((data) => {
+        // Show "Campus Pulse" first, keep everything else in its original order.
+        const sorted = [...data];
+        const idx = sorted.findIndex((p) => p.title?.toLowerCase().includes("campus pulse"));
+        if (idx > 0) {
+          const [item] = sorted.splice(idx, 1);
+          sorted.unshift(item);
+        }
+        setProjects(sorted);
+      })
       .catch(() => setProjects([]));
   }, []);
 
@@ -16,23 +26,15 @@ export default function Projects() {
       <p className="section-label">Projects</p>
       <h2>Featured Work</h2>
 
-      <div className="grid">
-        {projects.map((project) => (
-          <TiltCard as="article" className="card project-card" key={project._id}>
-            <p className="muted">{project.type}</p>
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-
-            <div className="mini-chips">
-              {project.stack?.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-
-            <a className="project-link" href={project.link} target="_blank" rel="noreferrer">
-              View Project
-            </a>
-          </TiltCard>
+      <div className="project-list">
+        {projects.map((project, i) => (
+          <Reveal
+            as="div"
+            key={project._id}
+            style={{ transitionDelay: `${Math.min(i * 180, 720)}ms` }}
+          >
+            <ProjectCard project={project} index={i} />
+          </Reveal>
         ))}
       </div>
     </section>

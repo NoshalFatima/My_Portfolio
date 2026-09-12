@@ -58,13 +58,22 @@ export default function Skills() {
       <h2>Technical Stack</h2>
 
       {grouped.map(([category, items], laneIndex) => (
-        <Reveal as="div" className="skills-category" key={category}>
+        <Reveal
+          as="div"
+          className="skills-category"
+          key={category}
+          style={{ transitionDelay: `${laneIndex * 150}ms` }}
+        >
           <p className="skills-category-label">{category}</p>
 
           <div className={`skills-lane ${laneIndex % 2 === 1 ? "skills-lane-reverse" : ""}`}>
             <div className="skills-track">
               {[...items, ...items].map((skill, i) => (
-                <span className="skill-badge" key={`${skill._id}-${i}`}>
+                <span
+                  className="skill-badge"
+                  key={`${skill._id}-${i}`}
+                  style={{ animationDelay: `${(i % 8) * 0.15}s` }}
+                >
                   <span className="skill-avatar" style={{ "--hue": hueFor(skill.name) }}>
                     {initialsFor(skill.name)}
                   </span>

@@ -8,6 +8,7 @@ import Projects from "./components/Projects.jsx";
 import Certificates from "./components/Certificates.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
+import GithubStats from "./components/GithubStats.jsx";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <About />
       <Skills />
       <Experience />
+      <GithubStats />
       <Projects />
       <Certificates />
       <Contact />

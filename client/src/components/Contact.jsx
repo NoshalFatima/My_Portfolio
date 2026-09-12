@@ -20,7 +20,7 @@ export default function Contact() {
 
   async function sendMessage(e) {
     e.preventDefault();
-    setStatus("Sending message...");
+    setStatus("> transmitting_message...");
 
     try {
       const response = await fetch("https://myportfolio-b54v.onrender.com/api/contact", {
@@ -32,7 +32,7 @@ export default function Contact() {
       });
 
       const data = await response.json();
-      setStatus(data.message);
+      setStatus(`> ${data.message}`);
 
       if (response.ok) {
         setForm({
@@ -44,42 +44,74 @@ export default function Contact() {
         });
       }
     } catch {
-      setStatus("Backend server is not running.");
+      setStatus("> connection_failed :: backend server is not running.");
     }
   }
 
   return (
-    <Reveal as="section" id="contact">
-      <p className="section-label">Contact</p>
-      <h2>Let’s Work Together</h2>
+    <section id="contact">
+      <Reveal as="p" className="section-label">Contact</Reveal>
+      <Reveal as="h2" style={{ transitionDelay: "80ms" }}>
+        Initialize Transmission<span className="term-cursor">_</span>
+      </Reveal>
 
       <div className="contact-layout">
-        <div className="contact-info">
-          <p>
-            I am actively looking for , junior developer
-            roles, and collaborative projects.
-          </p>
-          <a href="mailto:noshalfatima28@gmail.com">noshalfatima28@gmail.com</a>
-          <a href="tel:03404005981">03404005981</a>
-          <a href="https://github.com/NoshalFatima" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://linkedin.com/in/noshal-fatima" target="_blank" rel="noreferrer">LinkedIn</a>
+        <div className="contact-info terminal-lines">
+          <Reveal as="p" className="term-line" style={{ transitionDelay: "180ms" }}>
+            <span className="term-prompt">$</span> status --check
+            <br />
+            <span className="term-muted">// actively looking for junior developer roles &amp; collaborative projects</span>
+          </Reveal>
+          <Reveal as="p" className="term-line" style={{ transitionDelay: "260ms" }}>
+            <span className="term-prompt">$</span> contact --email
+            <br />
+            <a href="mailto:noshalfatima28@gmail.com">noshalfatima28@gmail.com</a>
+          </Reveal>
+          <Reveal as="p" className="term-line" style={{ transitionDelay: "340ms" }}>
+            <span className="term-prompt">$</span> contact --phone
+            <br />
+            <a href="tel:03404005981">03404005981</a>
+          </Reveal>
+          <Reveal as="p" className="term-line" style={{ transitionDelay: "420ms" }}>
+            <span className="term-prompt">$</span> social --links
+            <br />
+            <a href="https://github.com/NoshalFatima" target="_blank" rel="noreferrer">GitHub</a>
+            {" "}/{" "}
+            <a href="https://linkedin.com/in/noshal-fatima" target="_blank" rel="noreferrer">LinkedIn</a>
+          </Reveal>
         </div>
 
-        <form
-          onSubmit={sendMessage}
-          ref={formRef}
-          onMouseMove={onMouseMove}
-          onMouseLeave={onMouseLeave}
-        >
-          <input name="name" placeholder="Your name" value={form.name} onChange={updateForm} required />
-          <input name="phone" placeholder="Phone number" value={form.phone} onChange={updateForm} />
-          <input name="email" type="email" placeholder="Email address" value={form.email} onChange={updateForm} required />
-          <input name="subject" placeholder="Subject" value={form.subject} onChange={updateForm} required />
-          <textarea name="message" placeholder="Message" value={form.message} onChange={updateForm} required />
-          <button type="submit">Send Message</button>
-          {status && <p className="form-status">{status}</p>}
-        </form>
+        <Reveal as="div" style={{ transitionDelay: "260ms" }}>
+          <div className="terminal-panel" ref={formRef} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
+            <div className="terminal-titlebar">
+              <span className="term-dot term-dot-red" />
+              <span className="term-dot term-dot-yellow" />
+              <span className="term-dot term-dot-green" />
+              <span className="terminal-titletext">contact@noshal:~$</span>
+            </div>
+
+            <form onSubmit={sendMessage} className="terminal-form">
+              <label className="term-field-label">&gt; name</label>
+              <input name="name" placeholder="your name" value={form.name} onChange={updateForm} required />
+
+              <label className="term-field-label">&gt; phone (optional)</label>
+              <input name="phone" placeholder="phone number" value={form.phone} onChange={updateForm} />
+
+              <label className="term-field-label">&gt; email</label>
+              <input name="email" type="email" placeholder="email address" value={form.email} onChange={updateForm} required />
+
+              <label className="term-field-label">&gt; subject</label>
+              <input name="subject" placeholder="subject" value={form.subject} onChange={updateForm} required />
+
+              <label className="term-field-label">&gt; message</label>
+              <textarea name="message" placeholder="type your message..." value={form.message} onChange={updateForm} required />
+
+              <button type="submit">EXECUTE_TRANSMIT()</button>
+              {status && <p className="form-status">{status}</p>}
+            </form>
+          </div>
+        </Reveal>
       </div>
-    </Reveal>
+    </section>
   );
 }
