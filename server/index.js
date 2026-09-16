@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
 import portfolioRoutes from "./routes/portfolioRoutes.js";          
-import chatRoutes from "./routes/chatroutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 import path from "path"; 
 import { fileURLToPath } from "url";
 import { warmupModel } from "./utils/embeddings.js"; // Warmup import added
