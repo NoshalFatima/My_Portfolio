@@ -3,8 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
-import portfolioRoutes from "./routes/portfolioRoutes.js";
-import chatRoutes from "./routes/chatroutes.js"; // Fixed import path (./ instead of ../)
+import portfolioRoutes from "./routes/portfolioRoutes.js";          
+import chatRoutes from "./routes/chatroutes.js";
 import path from "path"; 
 import { fileURLToPath } from "url";
 import { warmupModel } from "./utils/embeddings.js"; // Warmup import added
